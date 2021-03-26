@@ -1,6 +1,0 @@
-INSERT, DELETE, SEARCH of data structure
-
-one more comment in MaximumFlow class
-
-comments for Network class
-

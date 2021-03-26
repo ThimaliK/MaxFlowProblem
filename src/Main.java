@@ -7,16 +7,15 @@ public class Main {
     public static void main(String[] args) {
 
         Parser parser = new Parser();
-        Graph graph = parser.readFile("bridge_3.txt");
+        Graph graph = parser.readFile("ladder_1.txt");
 
+        long startTime = System.nanoTime();
         MaximumFlow maximumFlow = new MaximumFlow();
 
-        System.out.println("There are " + graph.getNoOfNodes() + " nodes in this graph");
-
-        double startTime = System.nanoTime();
         System.out.println("Therefore, Maximum Flow of the graph = " + maximumFlow.getMaxFlow(graph));
-        double endTime = System.nanoTime();
-        double duration = (endTime - startTime);
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
 
         System.out.println("Time taken = " + (duration/1000000000.000000000) + " seconds");
 

@@ -4,28 +4,20 @@
 
 public class Graph {
 
-    private final int noOfNodes;
-    private final int [][] adjacencyMatrix;
-
-    public int getNoOfNodes() {
-        return noOfNodes;
-    }
-
-    public int[][] getAdjacencyMatrix() {
-        return adjacencyMatrix;
-    }
+    final int noOfNodes;
+    final int [][] adjacencyMatrix;
 
     public Graph(int noOfNodes) {
         this.noOfNodes = noOfNodes;
         this.adjacencyMatrix = new int[noOfNodes][noOfNodes];
     }
 
-    public void addEdge(int u, int v, int capacity) {
+    public void insert(int u, int v, int capacity) {
         adjacencyMatrix[u][v] = capacity;
     }
 
-    public void search(int u, int v) {
-
+    public int search(int u, int v) {
+        return adjacencyMatrix[u][v];
     }
 
     public void delete(int u, int v) {
@@ -34,18 +26,18 @@ public class Graph {
 
     public void displayAdjacencyMatrixData() {
 
-        System.out.print("*  ");
+        System.out.print("* ");
 
         for (int i=0; i<noOfNodes; i++) {
-            System.out.print(i+"  ");
+            System.out.print(i+" ");
         }
 
         System.out.println("");
 
         for (int i = 0; i< noOfNodes; i++) {
-            System.out.print(i +"  ");
+            System.out.print(i +" ");
             for (int j = 0; j< noOfNodes; j++) {
-                System.out.print(adjacencyMatrix[i][j]+ "  ");
+                System.out.print(adjacencyMatrix[i][j]+ " ");
             }
             System.out.println("");
         }
