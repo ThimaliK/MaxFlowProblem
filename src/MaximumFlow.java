@@ -2,7 +2,6 @@
 //UoW ID: w1761084
 //IIT ID: 2019303
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MaximumFlow {
@@ -16,7 +15,7 @@ public class MaximumFlow {
         }
 
         //to keep track of the next child nodes to be visited
-        LinkedList<Integer> queue = new LinkedList();
+        LinkedList<Integer> queue = new LinkedList<>();
 
         //initially the source node is added
         queue.add(source);
@@ -35,6 +34,7 @@ public class MaximumFlow {
 
             //checking for all edges in the graph
             for (int v = 0; v < adjacencyMatrix.length; v++) {
+
                 if (!visitedNodes[v] && adjacencyMatrix[u][v] > 0) {
 
                     //if an edge is outgoing towards the sink node
@@ -64,20 +64,20 @@ public class MaximumFlow {
     public int getMaxFlow(Graph graph) {
 
         int source = 0;    //source node is always zero
-        int sink = graph.noOfNodes - 1;  //sink node is the last node numerically
+        int sink = graph.getNoOfNodes() - 1;  //sink node is the last node numerically
 
         int u, v;
 
         //at first, the residual graph is a copy of the original graph since no flow has gone through it yet
-        int [][] residualGraph = new int[graph.noOfNodes][graph.noOfNodes];
-        for (u = 0; u < graph.noOfNodes; u++) {
-            for (v = 0; v < graph.noOfNodes; v++) {
+        int [][] residualGraph = new int[graph.getNoOfNodes()][graph.getNoOfNodes()];
+        for (u = 0; u < graph.getNoOfNodes(); u++) {
+            for (v = 0; v < graph.getNoOfNodes(); v++) {
                 residualGraph[u][v] = graph.adjacencyMatrix[u][v];
             }
         }
 
         //to keep track of the augmenting path
-        int[] parentNodes = new int[graph.noOfNodes];
+        int[] parentNodes = new int[graph.getNoOfNodes()];
 
         //Initially, maximum flow is set be zero
         int maxFlow = 0;
@@ -85,7 +85,7 @@ public class MaximumFlow {
         //while breadth first search is possible, an augmenting path is found
         while (breadthFirstSearch(residualGraph, parentNodes, source, sink)) {
 
-            System.out.print("\nAugmenting path = ");
+//            System.out.print("\nAugmenting path = ");
 
             //Initially flow through the path is set to be the maximum integer value
             int pathFlow = Integer.MAX_VALUE;
@@ -99,17 +99,17 @@ public class MaximumFlow {
             //the path flow going through the edges used in augmenting path is deducted from residual graph
             //path flow is added to backward edges
             for (v = sink; v != source; v = parentNodes[v]) {
-                System.out.print(v + " <-- ");
+//                System.out.print(v + " <-- ");
                 u = parentNodes[v];
                 residualGraph[u][v] -= pathFlow;
                 residualGraph[v][u] += pathFlow;
             }
 
-            System.out.print(source);
-
-
-            System.out.println("\nFlow units that can be transported through this path = " + pathFlow);
-            System.out.println("Therefore, max flow is now " + maxFlow + " + " + pathFlow + " = " + (maxFlow+pathFlow));
+//            System.out.print(source);
+//
+//
+//            System.out.println("\nFlow units that can be transported through this path = " + pathFlow);
+//            System.out.println("Therefore, max flow is now " + maxFlow + " + " + pathFlow + " = " + (maxFlow+pathFlow));
 
             //flow going through each path is added to calculate maximum flow of the graph
             maxFlow += pathFlow;

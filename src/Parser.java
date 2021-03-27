@@ -43,7 +43,7 @@ public class Parser {
             graph.displayAdjacencyMatrixData();
             System.out.println("");
             myReader.close();
-            System.out.println("There are " + graph.noOfNodes + " nodes in this graph");
+            System.out.println("There are " + graph.getNoOfNodes() + " nodes in this graph");
             System.out.println("There are " + edges + " edges in this graph");
 
             //complete graph is returned

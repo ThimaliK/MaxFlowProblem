@@ -7,12 +7,12 @@ public class Main {
     public static void main(String[] args) {
 
         Parser parser = new Parser();
-        Graph graph = parser.readFile("ladder_1.txt");
+        Graph graph = parser.readFile("ladder_8.txt");
 
         long startTime = System.nanoTime();
         MaximumFlow maximumFlow = new MaximumFlow();
 
-        System.out.println("Therefore, Maximum Flow of the graph = " + maximumFlow.getMaxFlow(graph));
+//        System.out.println("Therefore, Maximum Flow of the graph = " + maximumFlow.getMaxFlow(graph));
 
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
