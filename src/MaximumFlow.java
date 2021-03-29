@@ -30,29 +30,29 @@ public class MaximumFlow {
         while (!queue.isEmpty()) {
 
             //the first added element is removed (FIFO)
-            int u = queue.poll();
+            int previousNode = queue.poll();
 
             //checking for all edges in the graph
-            for (int v = 0; v < adjacencyMatrix.length; v++) {
+            for (int currentNode = 0; currentNode < adjacencyMatrix.length; currentNode++) {
 
-                if (!visitedNodes[v] && adjacencyMatrix[u][v] > 0) {
+                if (!visitedNodes[currentNode] && adjacencyMatrix[previousNode][currentNode] > 0) {
 
                     //if an edge is outgoing towards the sink node
-                    if (v == sink) {
+                    if (currentNode == sink) {
                         //parent of the sink node is the node connected to the other end of that edge
-                        parentNodes[v] = u;
+                        parentNodes[currentNode] = previousNode;
                         //breadth first search is possible since the sink node has been reached
                         return true;
                     }
 
                     //if there is an edge, the node that the edge is out going towards is added to queue
-                    queue.add(v);
+                    queue.add(currentNode);
 
                     //parent of this node is the node connected to the other end of that edge
-                    parentNodes[v] = u;
+                    parentNodes[currentNode] = previousNode;
 
                     //visited state of this node is set to true
-                    visitedNodes[v] = true;
+                    visitedNodes[currentNode] = true;
                 }
             }
         }
@@ -66,15 +66,8 @@ public class MaximumFlow {
         int source = 0;    //source node is always zero
         int sink = graph.getNoOfNodes() - 1;  //sink node is the last node numerically
 
-        int u, v;
-
-        //at first, the residual graph is a copy of the original graph since no flow has gone through it yet
-        int [][] residualGraph = new int[graph.getNoOfNodes()][graph.getNoOfNodes()];
-        for (u = 0; u < graph.getNoOfNodes(); u++) {
-            for (v = 0; v < graph.getNoOfNodes(); v++) {
-                residualGraph[u][v] = graph.adjacencyMatrix[u][v];
-            }
-        }
+        int previousNode;
+        int currentNode;
 
         //to keep track of the augmenting path
         int[] parentNodes = new int[graph.getNoOfNodes()];
@@ -83,33 +76,31 @@ public class MaximumFlow {
         int maxFlow = 0;
 
         //while breadth first search is possible, an augmenting path is found
-        while (breadthFirstSearch(residualGraph, parentNodes, source, sink)) {
+        while (breadthFirstSearch(graph.adjacencyMatrix, parentNodes, source, sink)) {
 
-//            System.out.print("\nAugmenting path = ");
+            System.out.print("\nAugmenting path = ");
 
             //Initially flow through the path is set to be the maximum integer value
             int pathFlow = Integer.MAX_VALUE;
 
             //starting from the sink, path is tracked through parent nodes and the biggest possible flow is found
-            for (v = sink; v != source; v = parentNodes[v]) {
-                u = parentNodes[v];
-                pathFlow = Math.min(pathFlow, residualGraph[u][v]);
+            for (currentNode = sink; currentNode != source; currentNode = parentNodes[currentNode]) {
+                previousNode = parentNodes[currentNode];
+                pathFlow = Math.min(pathFlow, graph.adjacencyMatrix[previousNode][currentNode]);
             }
 
             //the path flow going through the edges used in augmenting path is deducted from residual graph
             //path flow is added to backward edges
-            for (v = sink; v != source; v = parentNodes[v]) {
-//                System.out.print(v + " <-- ");
-                u = parentNodes[v];
-                residualGraph[u][v] -= pathFlow;
-                residualGraph[v][u] += pathFlow;
+            for (currentNode = sink; currentNode != source; currentNode = parentNodes[currentNode]) {
+                System.out.print(currentNode + " <-- ");
+                previousNode = parentNodes[currentNode];
+                graph.adjacencyMatrix[previousNode][currentNode] -= pathFlow;
+                graph.adjacencyMatrix[currentNode][previousNode] += pathFlow;
             }
 
-//            System.out.print(source);
-//
-//
-//            System.out.println("\nFlow units that can be transported through this path = " + pathFlow);
-//            System.out.println("Therefore, max flow is now " + maxFlow + " + " + pathFlow + " = " + (maxFlow+pathFlow));
+            System.out.print(source);
+            System.out.println("\nFlow units that can be transported through this path = " + pathFlow);
+            System.out.println("Therefore, max flow is now " + maxFlow + " + " + pathFlow + " = " + (maxFlow+pathFlow));
 
             //flow going through each path is added to calculate maximum flow of the graph
             maxFlow += pathFlow;

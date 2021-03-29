@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Parser {
 
-    public Graph readFile(String fileName) {
+    public Graph readFile(String filePath) {
 
         Graph graph = null;
         try {
 
-            File myObj = new File(fileName);
+            File myObj = new File(filePath);
             Scanner myReader = new Scanner(myObj);
 
             int edges = 0;
@@ -33,15 +33,13 @@ public class Parser {
                     int v = Integer.parseInt(split[1]);
                     int capacity = Integer.parseInt(split[2]);
                     assert graph != null;
-                    graph.insert(u, v, capacity);
+                    graph.addEdge(u, v, capacity);
                     edges++;
                 }
 
             }
 
             assert graph != null;
-            graph.displayAdjacencyMatrixData();
-            System.out.println("");
             myReader.close();
             System.out.println("There are " + graph.getNoOfNodes() + " nodes in this graph");
             System.out.println("There are " + edges + " edges in this graph");

@@ -1,0 +1,5 @@
+Printing the matrix?
+
+Main method hard coded for one text file at a time?
+
+When submitting, should input the files be removed?
